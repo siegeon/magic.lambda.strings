@@ -11,6 +11,9 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
+    /// <summary>
+    /// Concatenates two or more strings
+    /// </summary>
     [Slot(Name = "concat")]
     public class Concat : ISlot
     {
