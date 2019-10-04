@@ -12,10 +12,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [concat] slot for concatenating two or more strings together to become one.
+    /// [split] slot for splitting one string into multiple according to some string.
     /// </summary>
-    [Slot(Name = "concat")]
-    public class Concat : ISlot
+    [Slot(Name = "split")]
+    public class Split : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -25,11 +25,17 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [concat]");
+                throw new ApplicationException("No arguments provided to [split]");
 
             signaler.Signal("eval", input);
 
-            input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            var split = input.GetEx<string>();
+            var splitOn = input.Children.First().GetEx<string>();
+
+            input.Clear();
+            input.AddRange(split
+                .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new Node("", x)));
         }
     }
 }

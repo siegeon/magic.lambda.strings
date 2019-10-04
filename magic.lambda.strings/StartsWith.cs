@@ -11,9 +11,18 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
+    /// <summary>
+    /// [starts-with] slot that returns true if the specified string starts with its value
+    /// from its first argument.
+    /// </summary>
     [Slot(Name = "starts-with")]
     public class StartsWith : ISlot
     {
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             if (input.Children.Count() != 1)

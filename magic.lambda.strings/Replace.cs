@@ -10,9 +10,18 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
+    /// <summary>
+    /// [replace] slot for replacing occurrencies of one string with another string. Pass in [what]
+    /// being what to replace and [with] being its new value.
+    /// </summary>
     [Slot(Name = "replace")]
     public class Replace : ISlot
     {
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             var original = input.GetEx<string>();

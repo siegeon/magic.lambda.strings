@@ -3,6 +3,8 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
+using System;
+using System.Linq;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -10,10 +12,11 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [to-upper] slot that returns the uppercase value of its specified argument.
+    /// [ends-with] slot that returns true if the specified string ends with its value
+    /// from its first argument.
     /// </summary>
-    [Slot(Name = "to-upper")]
-    public class ToUpper : ISlot
+    [Slot(Name = "ends-with")]
+    public class EndsWith : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -22,7 +25,13 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            input.Value = input.GetEx<string>().ToUpperInvariant();
+            if (input.Children.Count() != 1)
+                throw new ApplicationException("[starts-with] must be given exactly one argument that contains value to look for");
+
+            signaler.Signal("eval", input);
+
+            input.Value = input.GetEx<string>()
+                .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
         }
     }
 }

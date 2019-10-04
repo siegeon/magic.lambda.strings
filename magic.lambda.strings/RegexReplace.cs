@@ -11,9 +11,19 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
+    /// <summary>
+    /// [regex-replace] slot that will perform a substitution of the regular expression
+    /// matches from [what] with [with] found in your source string. [what] is expected
+    /// to be a valid regular expression.
+    /// </summary>
     [Slot(Name = "regex-replace")]
     public class RegexReplace : ISlot
     {
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
             var original = input.GetEx<string>();
