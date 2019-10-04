@@ -16,6 +16,22 @@ String manipulation library for [Magic](https://github.com/polterguy/magic). Mor
 * __[strings.to-lower]__ - Returns the lower caps version of its given argument
 * __[strings.to-upper]__ - Returns the upper caps version of its specified argument.
 
+## Usage
+
+All the above slots that requires two arguments, will use the first argument as its _"what"_ argument, and the second
+as its _"with"_ argument. Avoiding naming these though, allows you to reference other slots, and use these as sources
+to parametrize your invocations to the above slots. For instance.
+
+```
+/*
+ * This will replace "hansen" with "tjobing hansen".
+ */
+.foo:thomas hansen
+replace:x:-
+   :hansen
+   :tjobing hansen
+```
+
 ## License
 
 Magic is licensed as Affero GPL. This means that you can only use it to create Open Source solutions.
