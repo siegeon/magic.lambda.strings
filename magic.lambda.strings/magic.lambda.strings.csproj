@@ -2,13 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Thomas Hansen</Authors>
-    <Description>String plugin for magic.lambda</Description>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
-    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.strings</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>magic.lambda.strings</PackageId>
+    <Authors>Thomas Hansen</Authors>
+    <Company>Thomas Hansen</Company>
+    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <Description>String helper slots for Magic to modify strings from your own Hyperlambda.</Description>
+    <PackageProjectUrl>https://github.com/polterguy/magic.lambda.strings</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/polterguy/magic.lambda.strings/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://polterguy.github.io/favicon.ico</PackageIconUrl>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>1.1.0</PackageVersion>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/polterguy/magic.lambda.strings.git</RepositoryUrl>
+    <PackageTags>string manipulation</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -21,4 +29,5 @@
     <PackageReference Include="magic.node.extensions" Version="1.0.0" />
     <PackageReference Include="magic.signals.contracts" Version="1.0.1" />
   </ItemGroup>
+
 </Project>
