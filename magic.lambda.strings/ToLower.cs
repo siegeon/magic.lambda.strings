@@ -3,6 +3,8 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
+using System;
+using System.Linq;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -10,9 +12,9 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [to-lower] slot that returns the lowercase value of its specified argument.
+    /// [strings.to-lower] slot that returns the lowercase value of its specified argument.
     /// </summary>
-    [Slot(Name = "to-lower")]
+    [Slot(Name = "strings.to-lower")]
     public class ToLower : ISlot
     {
         /// <summary>
@@ -22,6 +24,10 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
+            // Sanity checking.
+            if (input.Children.Any())
+                throw new ApplicationException("[strings.starts-with] must be given exactly one argument that contains value to look for");
+
             input.Value = input.GetEx<string>().ToLowerInvariant();
         }
     }

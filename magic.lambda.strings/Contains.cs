@@ -12,10 +12,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [contains] slot that will return true if your specified string contains the value
+    /// [strings.contains] slot that will return true if your specified string contains the value
     /// found from its first argument.
     /// </summary>
-    [Slot(Name = "contains")]
+    [Slot(Name = "strings.contains")]
     public class Contains : ISlot
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ApplicationException("[contains] must be given exactly one argument that contains value to look for");
+                throw new ApplicationException("[strings.contains] must be given exactly one argument that contains value to look for");
 
             signaler.Signal("eval", input);
 

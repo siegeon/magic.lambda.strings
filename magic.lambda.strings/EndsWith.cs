@@ -12,10 +12,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [ends-with] slot that returns true if the specified string ends with its value
+    /// [strings.ends-with] slot that returns true if the specified string ends with its value
     /// from its first argument.
     /// </summary>
-    [Slot(Name = "ends-with")]
+    [Slot(Name = "strings.ends-with")]
     public class EndsWith : ISlot
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ApplicationException("[starts-with] must be given exactly one argument that contains value to look for");
+                throw new ApplicationException("[strings.starts-with] must be given exactly one argument that contains value to look for");
 
             signaler.Signal("eval", input);
 

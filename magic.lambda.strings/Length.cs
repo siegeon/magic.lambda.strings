@@ -3,8 +3,6 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
-using System;
-using System.Linq;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -12,10 +10,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [strings.concat] slot for concatenating two or more strings together to become one.
+    /// [strings.length] slot that returns the length of its specified string argument.
     /// </summary>
-    [Slot(Name = "strings.concat")]
-    public class Concat : ISlot
+    [Slot(Name = "strings.length")]
+    public class Length : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -24,12 +22,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [strings.concat]");
-
-            signaler.Signal("eval", input);
-
-            input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            input.Value = input.GetEx<string>().Length;
         }
     }
 }

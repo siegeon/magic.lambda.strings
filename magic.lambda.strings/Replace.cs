@@ -3,6 +3,7 @@
  * Licensed as Affero GPL unless an explicitly proprietary license has been obtained.
  */
 
+using System;
 using System.Linq;
 using magic.node;
 using magic.node.extensions;
@@ -11,10 +12,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [replace] slot for replacing occurrencies of one string with another string. Pass in [what]
+    /// [strings.replace] slot for replacing occurrencies of one string with another string. Pass in [what]
     /// being what to replace and [with] being its new value.
     /// </summary>
-    [Slot(Name = "replace")]
+    [Slot(Name = "strings.replace")]
     public class Replace : ISlot
     {
         /// <summary>
@@ -24,9 +25,17 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
+            // Sanity checking.
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
+
+            signaler.Signal("eval", input);
+
             var original = input.GetEx<string>();
-            var what = input.Children.First(x => x.Name == "what").GetEx<string>();
-            var with = input.Children.First(x => x.Name == "with").GetEx<string>();
+            var what = input.Children.First().GetEx<string>();
+            var with = input.Children.Skip(1).First().GetEx<string>();
+
+            // Substituting.
             input.Value = original.Replace(what, with);
         }
     }
