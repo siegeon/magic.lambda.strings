@@ -32,6 +32,8 @@ replace:x:-
    :tjobing hansen
 ```
 
+Basically, the first argument is _"what to look for"_, and the second argument is _"what to substitute it with"_.
+
 ## License
 
 Magic is licensed as Affero GPL. This means that you can only use it to create Open Source solutions.
