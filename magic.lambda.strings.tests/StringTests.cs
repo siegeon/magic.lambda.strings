@@ -17,8 +17,8 @@ namespace magic.lambda.strings.tests
             var lambda = Common.Evaluate(@"
 .foo1:howdy world
 strings.replace:x:-
-   :world
-   :universe");
+   .:world
+   .:universe");
             Assert.Equal("howdy universe", lambda.Children.Skip(1).First().Value);
         }
 
@@ -77,9 +77,9 @@ strings.to-upper:x:-");
             var lambda = Common.Evaluate(@"
 .foo:foo-xxx
 strings.starts-with:x:-
-   :foo
+   .:foo
 strings.starts-with:x:-/-
-   :xxx");
+   .:xxx");
             Assert.True(lambda.Children.Skip(1).First().Get<bool>());
             Assert.False(lambda.Children.Skip(2).First().Get<bool>());
         }
@@ -90,9 +90,9 @@ strings.starts-with:x:-/-
             var lambda = Common.Evaluate(@"
 .foo:foo-xxx
 strings.ends-with:x:-
-   :foo
+   .:foo
 strings.ends-with:x:-/-
-   :xxx");
+   .:xxx");
             Assert.False(lambda.Children.Skip(1).First().Get<bool>());
             Assert.True(lambda.Children.Skip(2).First().Get<bool>());
         }
@@ -103,8 +103,8 @@ strings.ends-with:x:-/-
             var lambda = Common.Evaluate(@"
 .foo:thomas han0123sen
 strings.regex-replace:x:-
-   :han[0-9]*sen
-   :cool hansen");
+   .:han[0-9]*sen
+   .:cool hansen");
             Assert.Equal("thomas cool hansen", lambda.Children.Skip(1).First().Get<string>());
         }
 
