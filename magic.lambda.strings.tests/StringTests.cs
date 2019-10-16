@@ -120,5 +120,18 @@ strings.split:x:-
             Assert.Equal("b", lambda.Children.Skip(1).First().Children.Skip(1).First().Value);
             Assert.Equal("cde", lambda.Children.Skip(1).First().Children.Skip(2).First().Value);
         }
+
+        [Fact]
+        public void Join()
+        {
+            var lambda = Common.Evaluate(@"
+.foo
+   .:a
+   .:b
+   .:c
+strings.join:x:-/*
+   .:'-'");
+            Assert.Equal("a-b-c", lambda.Children.Skip(1).First().Value);
+        }
     }
 }
