@@ -72,6 +72,15 @@ strings.to-upper:x:-");
         }
 
         [Fact]
+        public void Length()
+        {
+            var lambda = Common.Evaluate(@"
+.foo:foo
+strings.length:x:-");
+            Assert.Equal(3, lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
         public void StartsWith()
         {
             var lambda = Common.Evaluate(@"
