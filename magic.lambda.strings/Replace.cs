@@ -27,7 +27,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
+                throw new ArgumentException("[strings.replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
 
             signaler.Signal("eval", input);
 
