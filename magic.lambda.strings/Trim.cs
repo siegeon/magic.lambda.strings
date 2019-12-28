@@ -12,11 +12,11 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [strings.trim] slot for trimming a specified string, optionally passing in
-    /// a string that defines which characters to trim away.
+    /// [strings.replace] slot for replacing occurrencies of one string with another string. Pass in [what]
+    /// being what to replace and [with] being its new value.
     /// </summary>
-    [Slot(Name = "strings.trim")]
-    public class Trim : ISlot
+    [Slot(Name = "strings.replace")]
+    public class Replace : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -26,17 +26,17 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             // Sanity checking.
-            if (input.Children.Count() > 1)
-                throw new ArgumentException("[strings.trim] can handle at most one argument");
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
 
             signaler.Signal("eval", input);
 
             var original = input.GetEx<string>();
-            var what = input.Children.FirstOrDefault()?.GetEx<string>();
-            if (what != null)
-                input.Value = original.Trim(what.ToCharArray());
-            else
-                input.Value = original.Trim();
+            var what = input.Children.First().GetEx<string>();
+            var with = input.Children.Skip(1).First().GetEx<string>();
+
+            // Substituting.
+            input.Value = original.Replace(what, with);
         }
     }
 }

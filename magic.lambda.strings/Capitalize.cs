@@ -12,10 +12,10 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [strings.to-lower] slot that returns the lowercase value of its specified argument.
+    /// [strings.capitalize] slot that returns the Capitalized value of its specified argument.
     /// </summary>
-    [Slot(Name = "strings.to-lower")]
-    public class ToLower : ISlot
+    [Slot(Name = "strings.capitalize")]
+    public class Capitalize : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -26,9 +26,10 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Any())
-                throw new ApplicationException("[strings.to-lower] must be given exactly one argument that contains value to lowercase");
+                throw new ApplicationException("[strings.capitalize] must be given exactly one argument that contains value to Capitalize");
 
-            input.Value = input.GetEx<string>().ToLowerInvariant();
+            var str = input.GetEx<string>();
+            input.Value = char.ToUpperInvariant(str.First()).ToString() + new string(str.Skip(1).ToArray());
         }
     }
 }
