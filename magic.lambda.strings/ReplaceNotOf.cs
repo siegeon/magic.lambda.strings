@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -12,11 +13,11 @@ using magic.signals.contracts;
 namespace magic.lambda.strings
 {
     /// <summary>
-    /// [strings.replace] slot for replacing occurrencies of one string with another string. Pass in [what]
-    /// being what to replace and [with] being its new value.
+    /// [strings.replace-not-of] slot for replacing occurrencies of any single character not matching
+    /// the specified character with some substitute character.
     /// </summary>
-    [Slot(Name = "strings.replace")]
-    public class Replace : ISlot
+    [Slot(Name = "strings.replace-not-of")]
+    public class ReplaceNotOf : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -27,7 +28,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace] requires exactly two arguments, the first being what to replace, the other beings its replacement");
+                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
 
             signaler.Signal("eval", input);
 
@@ -36,7 +37,15 @@ namespace magic.lambda.strings
             var with = input.Children.Skip(1).First().GetEx<string>();
 
             // Substituting.
-            input.Value = original.Replace(what, with);
+            var result = new StringBuilder();
+            foreach (var idx in original)
+            {
+                if (what.IndexOf(idx) != -1)
+                    result.Append(idx);
+                else
+                    result.Append(with);
+            }
+            input.Value = result.ToString();
         }
     }
 }
