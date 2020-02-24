@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
@@ -15,7 +16,8 @@ namespace magic.lambda.strings
     /// [strings.concat] slot for concatenating two or more strings together to become one.
     /// </summary>
     [Slot(Name = "strings.join")]
-    public class Join : ISlot
+    [Slot(Name = "wait.strings.join")]
+    public class Join : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -28,6 +30,22 @@ namespace magic.lambda.strings
                 throw new ApplicationException("No arguments provided to [strings.concat]");
 
             signaler.Signal("eval", input);
+
+            input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
+        }
+
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise the signal.</param>
+        /// <param name="input">Arguments to slot.</param>
+        /// <returns>An awaitable task.</returns>
+        public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            if (!input.Children.Any())
+                throw new ApplicationException("No arguments provided to [strings.concat]");
+
+            await signaler.SignalAsync("wait.eval", input);
 
             input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
         }

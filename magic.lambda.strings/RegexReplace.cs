@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using magic.node;
 using magic.node.extensions;
@@ -18,7 +19,8 @@ namespace magic.lambda.strings
     /// to be a valid regular expression.
     /// </summary>
     [Slot(Name = "strings.regex-replace")]
-    public class RegexReplace : ISlot
+    [Slot(Name = "wait.strings.regex-replace")]
+    public class RegexReplace : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -32,6 +34,29 @@ namespace magic.lambda.strings
                 throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
 
             signaler.Signal("eval", input);
+
+            var original = input.GetEx<string>();
+            var what = input.Children.First().GetEx<string>();
+            var with = input.Children.Skip(1).First().GetEx<string>();
+
+            // Substituting.
+            var ex = new Regex(what);
+            input.Value = ex.Replace(original, with);
+        }
+
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise the signal.</param>
+        /// <param name="input">Arguments to slot.</param>
+        /// <returns>An awaitable task.</returns>
+        public async Task SignalAsync(ISignaler signaler, Node input)
+        {
+            // Sanity checking.
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
+
+            await signaler.SignalAsync("wait.eval", input);
 
             var original = input.GetEx<string>();
             var what = input.Children.First().GetEx<string>();
