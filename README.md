@@ -33,9 +33,9 @@ to parametrize your invocations to the above slots. For instance.
  * This will replace "hansen" with "tjobing hansen".
  */
 .foo:thomas hansen
-replace:x:-
-   :hansen
-   :tjobing hansen
+strings.replace:x:-
+   .:hansen
+   .:tjobing hansen
 ```
 
 Basically, the first argument is _"what to look for"_, and the second argument is _"what to substitute it with"_.
