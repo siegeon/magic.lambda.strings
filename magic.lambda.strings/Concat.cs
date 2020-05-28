@@ -12,6 +12,7 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
+    // TODO: Consider removing entirely since it's perfectly overlapping [strings.join].
     /// <summary>
     /// [strings.concat] slot for concatenating two or more strings together to become one.
     /// </summary>
