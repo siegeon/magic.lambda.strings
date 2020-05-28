@@ -5,17 +5,17 @@
 
 String manipulation library for [Magic](https://github.com/polterguy/magic). More specifically, it gives you the following slots.
 
+* __[strings.replace]__ - Replaces occurrencies of the specified argument with the value of its specified argument.
+* __[strings.replace-not-of]__ - Replaces all characters found in string, except those found in its single argument.
 * __[strings.capitalize]__ - Turns the first character in your string into a CAPS.
 * __[strings.concat]__ - Concatenates two or more strings.
 * __[strings.contains]__ - Returns true if specified string contains the given argument.
 * __[strings.ends-with]__ - Returns true if the specified string ends with the specified argument.
+* __[strings.starts-with]__ - Returns true if the specified string starts with its argument.
 * __[strings.join]__ - Joins multiple strings together, with a separating character between each.
 * __[strings.length]__ - Returns the length in characters of the given string.
 * __[strings.regex-replace]__ - Replaces occurrencies matching the given regular expression with its argument.
-* __[strings.replace]__ - Replaces occurrencies of the specified argument with the value of its specified argument.
-* __[strings.replace-not-of]__ - Replaces all characters found in string, except those found in its single argument.
 * __[strings.split]__ - Splits a string into multiple strings on every match of its given argument
-* __[strings.starts-with]__ - Returns true if the specified string starts with its argument.
 * __[strings.to-lower]__ - Returns the lower caps version of its given argument
 * __[strings.to-upper]__ - Returns the upper caps version of its specified argument.
 * __[strings.trim]__ - Trims a string, optionally for all characters found in its argument.
@@ -26,7 +26,12 @@ String manipulation library for [Magic](https://github.com/polterguy/magic). Mor
 
 All the above slots that requires two arguments, will use the first argument as its _"what"_ argument, and the second
 as its _"with"_ argument. Avoiding naming these though, allows you to reference other slots, and use these as sources
-to parametrize your invocations to the above slots. For instance.
+to parametrize your invocations to the above slots.
+
+### strings.replace
+
+This slot replaces occurrencies of a string inside a string, with some other string. The simplest version is like
+follows.
 
 ```
 /*
@@ -38,7 +43,126 @@ strings.replace:x:-
    .:tjobing hansen
 ```
 
-Basically, the first argument is _"what to look for"_, and the second argument is _"what to substitute it with"_.
+You can also reference slots and dynamic slots for that matter, assuming your slots somehow returns strings,
+or something that can be converted into a string, such as the following illustrates.
+
+```
+/*
+ * This will replace "hansen" with "tjobing hansen".
+ */
+.what:hansen
+.foo:thomas hansen
+strings.replace:x:-
+   get-value:x:@.what
+   slots.signal:some-slot-returning-string
+      arg1-to-slot:foo
+      arg2-to-slot:foo
+```
+
+Above the first argument is _"what to look for"_, and the second argument is _"what to substitute it with"_.
+
+The above is a general pattern for most of these slots, where the node arguments supplied to the slot will be
+evaluated as a lambda object, before the arguments are consumed, allowing you to use arguments that are the
+result of invoking other slots as arguments to your original outer most slot.
+
+### strings.replace-not-of
+
+This slot will replace every single character in your original string, that cannot be found in its second
+argument. This is useful if you want to remove all characters that cannot be found in another character set,
+such as the following illustrates.
+
+```
+strings.replace-not-of:foo bar1howdy
+   .:abcdefghijklmnopqrstuvwxyz
+   .:-
+```
+
+The above will result in the following result `strings.replace-not-of:foo bar-howdy`
+
+### strings.capitalize
+
+Turns the first character of your string into a CAPS character.
+
+```
+strings.capitalize:thomas
+
+/*
+ * Resulting in "Thomas" after invocation.
+ */
+```
+
+### strings.concat
+
+Concatenates a list of strings into one string. Similar to **[strings.join]**, except it doesn't take a
+separating character.
+
+```
+.bar:Bar
+strings.concatenate
+   .:Thomas
+   .:Hansen
+   .:Foo
+   get-value:x:@.bar
+
+/*
+ * Resulting in "Thomas Hansen Foo Bar" after invocation.
+ */
+```
+
+### strings.contains
+
+Returns true if the specified string contains some sequence of characters.
+
+```
+// Returns true
+strings.contains:Thomas Hansen Is Cool
+   .:Hansen
+```
+
+### strings.ends-with
+
+Returns true if the specified string ends with some sequence of characters.
+
+```
+// Returns true
+strings.ends-with:Thomas Hansen Is Cool
+   .:Cool
+
+// Returns false
+strings.ends-with:Thomas Hansen Is Coolio
+   .:Cool
+```
+
+### strings.starts-with
+
+Returns true if the specified string starts with some sequence of characters.
+
+```
+// Returns true
+strings.ends-with:Thomas Hansen Is Cool
+   .:Thomas
+
+// Returns false
+strings.ends-with:Thomas Hansen Is Cool
+   .:Hansen
+```
+
+### strings.join
+
+Similar to **[strings.concat]**, except it also takes an optional separating character, allowing you to
+concatenate a bunch of strings, and making sure each original string is separated by some sequence of strings.
+
+```
+.src
+   .:foo
+   .:bar
+strings.join:x:@.src/*
+   .:,
+
+/*
+ * Results becomes "foo, bar"
+ */
+```
 
 ## License
 
