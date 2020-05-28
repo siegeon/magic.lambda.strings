@@ -164,6 +164,82 @@ strings.join:x:@.src/*
  */
 ```
 
+### strings.length
+
+Returns the length of a string as an integer number.
+
+```
+// Returns 6
+strings.length:thomas
+```
+
+### strings.regex-replace
+
+Replaces matches of the given regular expression with some static sequence of characters.
+
+```
+// Results in "FOO bar hansen"
+strings.regex-replace:foo bar hansen
+   .:fo+
+   .:FOO
+```
+
+The first argument is what regular expression to match, the second argument is what to replaces
+all matches with.
+
+### strings.split
+
+Splits a string into multiple strings, where a sequence of characters can be found, removing the original
+sequence of characters from the resulting node set.
+
+```
+.foo:some input string
+strings.split:x:-
+   .:' '
+```
+
+The above will result in the following result.
+
+```
+.foo:some input string
+strings.split:x:-
+   .:some
+   .:input
+   .:string
+```
+
+### strings.to-lower
+
+Turns every single character in your input string into a lowercase character.
+
+```
+strings.to-lower:Thomas Hansen Is Cool
+
+// Results in "thomas hansen is cool"
+```
+
+### strings.to-upper
+
+Turns every single character in your input string into a UPPER case character.
+
+```
+strings.to-upper:Thomas Hansen Is Cool
+
+// Results in "THOMAS HANSEN IS COOL"
+```
+
+### strings.trim, strings.trim-start, strings.trim-end
+
+Trims a string, either both sides, only the start of it, or only the end of it, for
+occurrencies of characters found in the sequence of characters provided as its argument.
+
+```
+strings.trim:09thomas12
+   .:1234567890
+
+// Results in "thomas"
+```
+
 ## License
 
 Although most of Magic's source code is publicly available, Magic is _not_ Open Source or Free Software.
