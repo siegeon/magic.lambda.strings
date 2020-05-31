@@ -54,7 +54,7 @@ or something that can be converted into a string, such as the following illustra
 .foo:thomas hansen
 strings.replace:x:-
    get-value:x:@.what
-   slots.signal:some-slot-returning-string
+   signal:some-slot-returning-string
       arg1-to-slot:foo
       arg2-to-slot:foo
 ```
