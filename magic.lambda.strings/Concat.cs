@@ -28,7 +28,7 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [strings.concat]");
+                throw new ArgumentException("No arguments provided to [strings.concat]");
 
             signaler.Signal("eval", input);
 
@@ -44,7 +44,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [strings.concat]");
+                throw new ArgumentException("No arguments provided to [strings.concat]");
 
             await signaler.SignalAsync("wait.eval", input);
 

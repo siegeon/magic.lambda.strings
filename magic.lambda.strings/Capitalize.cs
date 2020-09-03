@@ -26,7 +26,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Any())
-                throw new ApplicationException("[strings.capitalize] must be given exactly one argument that contains value to Capitalize");
+                throw new ArgumentException("[strings.capitalize] must be given exactly one argument that contains value to Capitalize");
 
             var str = input.GetEx<string>();
             input.Value = char.ToUpperInvariant(str.First()).ToString() + new string(str.Skip(1).ToArray());

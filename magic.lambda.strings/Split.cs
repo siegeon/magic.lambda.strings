@@ -28,7 +28,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [strings.split]");
+                throw new ArgumentException("No arguments provided to [strings.split]");
 
             signaler.Signal("eval", input);
 
@@ -53,7 +53,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (!input.Children.Any())
-                throw new ApplicationException("No arguments provided to [strings.split]");
+                throw new ArgumentException("No arguments provided to [strings.split]");
 
             await signaler.SignalAsync("wait.eval", input);
 

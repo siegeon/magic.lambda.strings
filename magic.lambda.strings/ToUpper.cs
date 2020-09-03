@@ -26,7 +26,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Any())
-                throw new ApplicationException("[strings.to-upper] must be given exactly one argument that contains value to UPPERCASE");
+                throw new ArgumentException("[strings.to-upper] must be given exactly one argument that contains value to UPPERCASE");
 
             input.Value = input.GetEx<string>().ToUpperInvariant();
         }

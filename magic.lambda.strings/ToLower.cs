@@ -26,7 +26,7 @@ namespace magic.lambda.strings
         {
             // Sanity checking.
             if (input.Children.Any())
-                throw new ApplicationException("[strings.to-lower] must be given exactly one argument that contains value to lowercase");
+                throw new ArgumentException("[strings.to-lower] must be given exactly one argument that contains value to lowercase");
 
             input.Value = input.GetEx<string>().ToLowerInvariant();
         }
