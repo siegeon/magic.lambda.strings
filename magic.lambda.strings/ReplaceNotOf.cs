@@ -30,21 +30,7 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-
-            var original = input.GetEx<string>();
-            var what = input.Children.First().GetEx<string>();
-            var with = input.Children.Skip(1).First().GetEx<string>();
-
-            // Substituting.
-            var result = new StringBuilder();
-            foreach (var idx in original)
-            {
-                if (what.IndexOf(idx) != -1)
-                    result.Append(idx);
-                else
-                    result.Append(with);
-            }
-            input.Value = result.ToString();
+            ReplaceImplementation(input);
         }
 
         /// <summary>
@@ -57,7 +43,19 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
+            ReplaceImplementation(input);
+        }
 
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
+        }
+
+        static void ReplaceImplementation(Node input)
+        {
             var original = input.GetEx<string>();
             var what = input.Children.First().GetEx<string>();
             var with = input.Children.Skip(1).First().GetEx<string>();
@@ -72,14 +70,6 @@ namespace magic.lambda.strings
                     result.Append(with);
             }
             input.Value = result.ToString();
-        }
-
-        #region [ -- Private helper methods -- ]
-
-        static void SanityCheck(Node input)
-        {
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
         }
 
         #endregion
