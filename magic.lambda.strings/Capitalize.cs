@@ -24,10 +24,6 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (input.Children.Any())
-                throw new ArgumentException("[strings.capitalize] must be given exactly one argument that contains value to capitalize");
-
             var str = input.GetEx<string>();
             input.Value = 
                 char.ToUpperInvariant(str.First()).ToString() +

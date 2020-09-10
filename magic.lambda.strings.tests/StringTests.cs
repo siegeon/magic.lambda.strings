@@ -25,6 +25,39 @@ strings.replace:x:-
         }
 
         [Fact]
+        public async Task ReplaceAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo1:howdy world
+wait.strings.replace:x:-
+   .:world
+   .:universe");
+            Assert.Equal("howdy universe", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void ReplaceThrows_01()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo1:howdy world
+strings.replace:x:-
+   .:world
+"));
+        }
+
+        [Fact]
+        public void ReplaceThrows_02()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo1:howdy world
+strings.replace:x:-
+   .:world
+   .:universe
+   .:throws
+"));
+        }
+
+        [Fact]
         public void ReplaceNotOf()
         {
             var lambda = Common.Evaluate(@"
@@ -40,7 +73,7 @@ strings.replace-not-of:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:abcd123efg
-strings.replace-not-of:x:-
+wait.strings.replace-not-of:x:-
    .:abcdefg
    .:XX");
             Assert.Equal("abcdXXXXXXefg", lambda.Children.Skip(1).First().Value);
@@ -182,6 +215,25 @@ strings.contains:x:-
         }
 
         [Fact]
+        public async Task ContainsAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo1:howdy world
+wait.strings.contains:x:-
+   .:world");
+            Assert.Equal(true, lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void ContainsThrows()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo1:howdy world
+strings.contains:x:-
+"));
+        }
+
+        [Fact]
         public void Concat()
         {
             var lambda = Common.Evaluate(@"
@@ -190,6 +242,26 @@ strings.concat
    get-value:x:@.foo
    .:' bar'");
             Assert.Equal("foo bar", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public async Task ConcatAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo:foo
+strings.concat
+   get-value:x:@.foo
+   .:' bar'");
+            Assert.Equal("foo bar", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void ConcatThrows()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo:foo
+strings.concat
+"));
         }
 
         [Fact]
@@ -242,6 +314,28 @@ strings.starts-with:x:-/-
         }
 
         [Fact]
+        public async Task StartsWithAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo:foo-xxx
+wait.strings.starts-with:x:-
+   .:foo
+wait.strings.starts-with:x:-/-
+   .:xxx");
+            Assert.True(lambda.Children.Skip(1).First().Get<bool>());
+            Assert.False(lambda.Children.Skip(2).First().Get<bool>());
+        }
+
+        [Fact]
+        public void StartsWithThrows()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo:foo-xxx
+strings.starts-with:x:-
+"));
+        }
+
+        [Fact]
         public void EndsWith()
         {
             var lambda = Common.Evaluate(@"
@@ -252,6 +346,28 @@ strings.ends-with:x:-/-
    .:xxx");
             Assert.False(lambda.Children.Skip(1).First().Get<bool>());
             Assert.True(lambda.Children.Skip(2).First().Get<bool>());
+        }
+
+        [Fact]
+        public async Task EndsWithAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo:foo-xxx
+wait.strings.ends-with:x:-
+   .:foo
+wait.strings.ends-with:x:-/-
+   .:xxx");
+            Assert.False(lambda.Children.Skip(1).First().Get<bool>());
+            Assert.True(lambda.Children.Skip(2).First().Get<bool>());
+        }
+
+        [Fact]
+        public void EndsWithThrows()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo:foo-xxx
+strings.ends-with:x:-
+"));
         }
 
         [Fact]
@@ -266,11 +382,55 @@ strings.regex-replace:x:-
         }
 
         [Fact]
+        public async Task ReplaceRegExAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo:thomas han0123sen
+wait.strings.regex-replace:x:-
+   .:han[0-9]*sen
+   .:cool hansen");
+            Assert.Equal("thomas cool hansen", lambda.Children.Skip(1).First().Get<string>());
+        }
+
+        [Fact]
+        public void ReplaceRegExThrows_01()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo:thomas han0123sen
+strings.regex-replace:x:-
+   .:han[0-9]*sen"));
+        }
+
+        [Fact]
+        public void ReplaceRegExThrows_02()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo:thomas han0123sen
+strings.regex-replace:x:-
+   .:han[0-9]*sen
+   .:cool hansen
+   .:throws"));
+        }
+
+        [Fact]
         public void Split()
         {
             var lambda = Common.Evaluate(@"
 .foo:a b cde f
 strings.split:x:-
+   .:' '");
+            Assert.Equal(4, lambda.Children.Skip(1).First().Children.Count());
+            Assert.Equal("a", lambda.Children.Skip(1).First().Children.First().Value);
+            Assert.Equal("b", lambda.Children.Skip(1).First().Children.Skip(1).First().Value);
+            Assert.Equal("cde", lambda.Children.Skip(1).First().Children.Skip(2).First().Value);
+        }
+
+        [Fact]
+        public async Task SplitAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo:a b cde f
+wait.strings.split:x:-
    .:' '");
             Assert.Equal(4, lambda.Children.Skip(1).First().Children.Count());
             Assert.Equal("a", lambda.Children.Skip(1).First().Children.First().Value);
@@ -289,6 +449,31 @@ strings.split:x:-
 strings.join:x:-/*
    .:'-'");
             Assert.Equal("a-b-c", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public async Task JoinAsync()
+        {
+            var lambda = await Common.EvaluateAsync(@"
+.foo
+   .:a
+   .:b
+   .:c
+wait.strings.join:x:-/*
+   .:'-'");
+            Assert.Equal("a-b-c", lambda.Children.Skip(1).First().Value);
+        }
+
+        [Fact]
+        public void JoinThrows()
+        {
+            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+.foo
+   .:a
+   .:b
+   .:c
+strings.join:x:-/*
+"));
         }
     }
 }
