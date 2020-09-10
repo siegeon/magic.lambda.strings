@@ -28,7 +28,7 @@ strings.concat
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo:foo
-strings.concat
+wait.strings.concat
    get-value:x:@.foo
    .:' bar'");
             Assert.Equal("foo bar", lambda.Children.Skip(1).First().Value);
