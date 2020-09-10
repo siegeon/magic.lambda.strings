@@ -28,7 +28,9 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-            input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
+            input.Value = string.Join(
+                input.Children.First(x => x.Name != "").GetEx<string>(),
+                input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
         }
 
         /// <summary>
@@ -41,15 +43,17 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
-            input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
+            input.Value = string.Join(
+                input.Children.First(x => x.Name != "").GetEx<string>(),
+                input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
         }
 
         #region [ -- Private helper methods -- ]
 
         static void SanityCheck(Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.join]");
+            if (input.Children.Count(x => x.Name.Length != 0) != 1)
+                throw new ArgumentException("[strings.join] requires exactly one argument with a name.");
         }
 
         #endregion
