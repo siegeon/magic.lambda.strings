@@ -32,17 +32,19 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            if (input.Children.Count() > 1)
-                throw new ArgumentException("[strings.trim] can handle at most one argument");
             signaler.Signal("eval", input);
             TrimImplementation(input);
         }
 
+        /// <summary>
+        /// Implementation of slot.
+        /// </summary>
+        /// <param name="signaler">Signaler used to raise signal.</param>
+        /// <param name="input">Arguments to your slot.</param>
+        /// <returns>Awaitable task</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            if (input.Children.Count() > 1)
-                throw new ArgumentException("[strings.trim] can handle at most one argument");
             await signaler.SignalAsync("eval", input);
             TrimImplementation(input);
         }
@@ -51,6 +53,8 @@ namespace magic.lambda.strings
 
         static void SanityCheck(Node input)
         {
+            if (input.Children.Count() > 1)
+                throw new ArgumentException("[strings.trim] can handle at most one argument");
             if (input.Children.Count() > 1)
                 throw new ArgumentException("[strings.trim] can handle at most one argument");
         }

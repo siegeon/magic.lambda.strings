@@ -26,11 +26,8 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.join]");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
-
             input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
         }
 
@@ -42,12 +39,19 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.join]");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
-
             input.Value = string.Join(input.Children.First(x => x.Name != "").GetEx<string>(), input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (!input.Children.Any())
+                throw new ArgumentException("No arguments provided to [strings.join]");
+        }
+
+        #endregion
     }
 }
