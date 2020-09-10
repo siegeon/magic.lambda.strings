@@ -55,8 +55,6 @@ namespace magic.lambda.strings
         {
             if (input.Children.Count() > 1)
                 throw new ArgumentException("[strings.trim] can handle at most one argument");
-            if (input.Children.Count() > 1)
-                throw new ArgumentException("[strings.trim] can handle at most one argument");
         }
 
         static void TrimImplementation(Node input)
