@@ -26,10 +26,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.split]");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
 
             // Figuring out which string to split, and upon what to split.
@@ -51,10 +48,7 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.split]");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
 
             // Figuring out which string to split, and upon what to split.
@@ -67,5 +61,15 @@ namespace magic.lambda.strings
                 .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => new Node("", x)));
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (!input.Children.Any())
+                throw new ArgumentException("No arguments provided to [strings.split]");
+        }
+
+        #endregion
     }
 }

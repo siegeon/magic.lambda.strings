@@ -12,7 +12,6 @@ using magic.signals.contracts;
 
 namespace magic.lambda.strings
 {
-    // TODO: Consider removing entirely since it's perfectly overlapping [strings.join].
     /// <summary>
     /// [strings.concat] slot for concatenating two or more strings together to become one.
     /// </summary>
@@ -27,9 +26,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.concat]");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
 
             input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
@@ -43,12 +40,20 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.concat]");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
 
             input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (!input.Children.Any())
+                throw new ArgumentException("No arguments provided to [strings.concat]");
+        }
+
+        #endregion
     }
 }

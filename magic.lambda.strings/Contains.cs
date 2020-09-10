@@ -27,11 +27,8 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.contains] must be given exactly one argument that contains value to look for");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
-
             input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
         }
 
@@ -43,12 +40,19 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.contains] must be given exactly one argument that contains value to look for");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
-
             input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (input.Children.Count() != 1)
+                throw new ArgumentException("[strings.contains] must be given exactly one argument that contains value to look for");
+        }
+
+        #endregion
     }
 }

@@ -28,7 +28,7 @@ namespace magic.lambda.strings
         public void Signal(ISignaler signaler, Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.starts-with] must be given exactly one argument that contains value to look for");
+                throw new ArgumentException("[strings.ends-with] must be given exactly one argument that contains value to look for");
 
             signaler.Signal("eval", input);
 
@@ -45,7 +45,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.starts-with] must be given exactly one argument that contains value to look for");
+                throw new ArgumentException("[strings.ends-with] must be given exactly one argument that contains value to look for");
 
             await signaler.SignalAsync("wait.eval", input);
 

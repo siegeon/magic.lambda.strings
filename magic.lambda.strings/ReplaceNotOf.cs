@@ -28,10 +28,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
 
             var original = input.GetEx<string>();
@@ -58,10 +55,7 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
 
             var original = input.GetEx<string>();
@@ -79,5 +73,15 @@ namespace magic.lambda.strings
             }
             input.Value = result.ToString();
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
+        }
+
+        #endregion
     }
 }

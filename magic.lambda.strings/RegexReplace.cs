@@ -29,10 +29,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
-
+            SanityCheck(input);
             signaler.Signal("eval", input);
 
             var original = input.GetEx<string>();
@@ -52,10 +49,7 @@ namespace magic.lambda.strings
         /// <returns>An awaitable task.</returns>
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
-            // Sanity checking.
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
-
+            SanityCheck(input);
             await signaler.SignalAsync("wait.eval", input);
 
             var original = input.GetEx<string>();
@@ -66,5 +60,15 @@ namespace magic.lambda.strings
             var ex = new Regex(what);
             input.Value = ex.Replace(original, with);
         }
+
+        #region [ -- Private helper methods -- ]
+
+        static void SanityCheck(Node input)
+        {
+            if (input.Children.Count() != 2)
+                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
+        }
+
+        #endregion
     }
 }
