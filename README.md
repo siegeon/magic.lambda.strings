@@ -1,7 +1,7 @@
 
 # Magic Lambda Strings
 
-[![Build status](https://travis-ci.org/polterguy/magic.lambda.strings.svg?master)](https://travis-ci.org/polterguy/magic.lambda.strings)
+[![Build status](https://travis-ci.com/polterguy/magic.lambda.strings.svg?master)](https://travis-ci.com/polterguy/magic.lambda.strings)
 
 String manipulation library for [Magic](https://github.com/polterguy/magic). More specifically, it gives you the following slots.
 
