@@ -239,3 +239,18 @@ strings.trim:09thomas12
 
 // Results in "thomas"
 ```
+
+## Quality gates
+
+- [![Build status](https://travis-ci.com/polterguy/magic.lambda.strings.svg?master)](https://travis-ci.com/polterguy/magic.lambda.strings)
+- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=alert_status)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=bugs)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=code_smells)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=coverage)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=ncloc)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=security_rating)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=sqale_index)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
+- [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=polterguy_magic.lambda.strings&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=polterguy_magic.lambda.strings)
