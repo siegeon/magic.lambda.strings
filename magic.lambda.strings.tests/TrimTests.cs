@@ -38,7 +38,7 @@ strings.trim:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:@""  howdy world    ""
-wait.strings.trim:x:-
+strings.trim:x:-
 ");
             Assert.Equal("howdy world", lambda.Children.Skip(1).First().Value);
         }
@@ -69,7 +69,7 @@ strings.trim-start:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:@""  howdy world    ""
-wait.strings.trim-start:x:-
+strings.trim-start:x:-
 ");
             Assert.Equal("howdy world    ", lambda.Children.Skip(1).First().Value);
         }
@@ -100,7 +100,7 @@ strings.trim-end:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:@""  howdy world    ""
-wait.strings.trim-end:x:-
+strings.trim-end:x:-
 ");
             Assert.Equal("  howdy world", lambda.Children.Skip(1).First().Value);
         }
@@ -121,7 +121,7 @@ strings.trim-end:x:-
         {
             await Assert.ThrowsAsync<ArgumentException>(async () => await Common.EvaluateAsync(@"
 .foo1:@""  howdy world    ""
-wait.strings.trim-end:x:-
+strings.trim-end:x:-
    .:foo
    .:error
 "));

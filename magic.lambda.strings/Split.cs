@@ -16,7 +16,6 @@ namespace magic.lambda.strings
     /// [strings.split] slot for splitting one string into multiple according to some string.
     /// </summary>
     [Slot(Name = "strings.split")]
-    [Slot(Name = "wait.strings.split")]
     public class Split : ISlot, ISlotAsync
     {
         /// <summary>
@@ -49,7 +48,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
 
             // Figuring out which string to split, and upon what to split.
             var split = input.GetEx<string>();

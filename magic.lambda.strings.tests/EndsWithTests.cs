@@ -31,9 +31,9 @@ strings.ends-with:x:-/-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo:foo-xxx
-wait.strings.ends-with:x:-
+strings.ends-with:x:-
    .:foo
-wait.strings.ends-with:x:-/-
+strings.ends-with:x:-/-
    .:xxx");
             Assert.False(lambda.Children.Skip(1).First().Get<bool>());
             Assert.True(lambda.Children.Skip(2).First().Get<bool>());

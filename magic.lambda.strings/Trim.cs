@@ -19,9 +19,6 @@ namespace magic.lambda.strings
     [Slot(Name = "strings.trim")]
     [Slot(Name = "strings.trim-start")]
     [Slot(Name = "strings.trim-end")]
-    [Slot(Name = "wait.strings.trim")]
-    [Slot(Name = "wait.strings.trim-start")]
-    [Slot(Name = "wait.strings.trim-end")]
     public class Trim : ISlot, ISlotAsync
     {
         /// <summary>
@@ -64,14 +61,12 @@ namespace magic.lambda.strings
             switch(input.Name)
             {
                 case "strings.trim-start":
-                case "wait.strings.trim-start":
                     if (string.IsNullOrEmpty(what))
                         input.Value = original.TrimStart();
                     else
                         input.Value = original.TrimStart(what.ToCharArray());
                     break;
                 case "strings.trim-end":
-                case "wait.strings.trim-end":
                     if (string.IsNullOrEmpty(what))
                         input.Value = original.TrimEnd();
                     else

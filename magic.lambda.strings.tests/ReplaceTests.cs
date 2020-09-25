@@ -30,7 +30,7 @@ strings.replace:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:howdy world
-wait.strings.replace:x:-
+strings.replace:x:-
    .:world
    .:universe
 ");
@@ -76,7 +76,7 @@ strings.replace-not-of:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:abcd123efg
-wait.strings.replace-not-of:x:-
+strings.replace-not-of:x:-
    .:abcdefg
    .:XX
 ");
@@ -109,7 +109,7 @@ strings.regex-replace:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo:thomas han0123sen
-wait.strings.regex-replace:x:-
+strings.regex-replace:x:-
    .:han[0-9]*sen
    .:cool hansen");
             Assert.Equal("thomas cool hansen", lambda.Children.Skip(1).First().Get<string>());

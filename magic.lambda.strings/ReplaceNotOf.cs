@@ -18,7 +18,6 @@ namespace magic.lambda.strings
     /// the specified character with some substitute character.
     /// </summary>
     [Slot(Name = "strings.replace-not-of")]
-    [Slot(Name = "wait.strings.replace-not-of")]
     public class ReplaceNotOf : ISlot, ISlotAsync
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
             ReplaceImplementation(input);
         }
 

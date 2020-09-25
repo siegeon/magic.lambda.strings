@@ -33,7 +33,7 @@ strings.join:x:-/*
    .:a
    .:b
    .:c
-wait.strings.join:x:-/*
+strings.join:x:-/*
    .:'-x-'");
             Assert.Equal("a-x-b-x-c", lambda.Children.Skip(1).First().Value);
         }

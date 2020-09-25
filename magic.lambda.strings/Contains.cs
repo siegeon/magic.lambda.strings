@@ -17,7 +17,6 @@ namespace magic.lambda.strings
     /// found from its first argument.
     /// </summary>
     [Slot(Name = "strings.contains")]
-    [Slot(Name = "wait.strings.contains")]
     public class Contains : ISlot, ISlotAsync
     {
         /// <summary>
@@ -41,7 +40,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
             input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
         }
 

@@ -37,7 +37,7 @@ strings.contains:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo1:howdy world
-wait.strings.contains:x:-
+strings.contains:x:-
    .:world");
             Assert.Equal(true, lambda.Children.Skip(1).First().Value);
         }

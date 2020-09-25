@@ -16,7 +16,6 @@ namespace magic.lambda.strings
     /// [strings.concat] slot for concatenating two or more strings together to become one.
     /// </summary>
     [Slot(Name = "strings.concat")]
-    [Slot(Name = "wait.strings.concat")]
     public class Concat : ISlot, ISlotAsync
     {
         /// <summary>
@@ -41,7 +40,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
 
             input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
         }

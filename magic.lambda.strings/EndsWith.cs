@@ -17,7 +17,6 @@ namespace magic.lambda.strings
     /// from its first argument.
     /// </summary>
     [Slot(Name = "strings.ends-with")]
-    [Slot(Name = "wait.strings.ends-with")]
     public class EndsWith : ISlot, ISlotAsync
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
             input.Value = input.GetEx<string>()
                 .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
         }

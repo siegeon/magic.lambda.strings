@@ -31,7 +31,7 @@ strings.split:x:-
         {
             var lambda = await Common.EvaluateAsync(@"
 .foo:a b cde f
-wait.strings.split:x:-
+strings.split:x:-
    .:' '
 ");
             Assert.Equal(4, lambda.Children.Skip(1).First().Children.Count());

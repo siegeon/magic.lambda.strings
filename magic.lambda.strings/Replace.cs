@@ -17,7 +17,6 @@ namespace magic.lambda.strings
     /// being what to replace and [with] being its new value.
     /// </summary>
     [Slot(Name = "strings.replace")]
-    [Slot(Name = "wait.strings.replace")]
     public class Replace : ISlot, ISlotAsync
     {
         /// <summary>
@@ -47,7 +46,7 @@ namespace magic.lambda.strings
         public async Task SignalAsync(ISignaler signaler, Node input)
         {
             SanityCheck(input);
-            await signaler.SignalAsync("wait.eval", input);
+            await signaler.SignalAsync("eval", input);
 
             var original = input.GetEx<string>();
             var what = input.Children.First().GetEx<string>();
