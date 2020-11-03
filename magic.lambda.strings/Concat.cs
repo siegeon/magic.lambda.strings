@@ -27,8 +27,8 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-
             input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            input.Clear();
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
-
             input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            input.Clear();
         }
 
         #region [ -- Private helper methods -- ]
