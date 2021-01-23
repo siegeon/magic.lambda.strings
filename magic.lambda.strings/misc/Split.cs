@@ -10,14 +10,14 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.misc
 {
     /// <summary>
-    /// [strings.ends-with] slot that returns true if the specified string ends with its value
-    /// from its first argument.
+    /// [strings.split] slot for splitting one string into multiple
+    /// strings according to some string.
     /// </summary>
-    [Slot(Name = "strings.ends-with")]
-    public class EndsWith : ISlot, ISlotAsync
+    [Slot(Name = "strings.split")]
+    public class Split : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -28,8 +28,16 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-            input.Value = input.GetEx<string>()
-                .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+
+            // Figuring out which string to split, and upon what to split.
+            var split = input.GetEx<string>();
+            var splitOn = input.Children.First().GetEx<string>();
+
+            // Returning the substituted strings to caller as nodes.
+            input.Clear();
+            input.AddRange(split
+                .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new Node("", x)));
         }
 
         /// <summary>
@@ -42,16 +50,24 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
-            input.Value = input.GetEx<string>()
-                .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+
+            // Figuring out which string to split, and upon what to split.
+            var split = input.GetEx<string>();
+            var splitOn = input.Children.First().GetEx<string>();
+
+            // Returning the substituted strings to caller as nodes.
+            input.Clear();
+            input.AddRange(split
+                .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new Node("", x)));
         }
 
         #region [ -- Private helper methods -- ]
 
         static void SanityCheck(Node input)
         {
-            if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.ends-with] must be given exactly one argument that contains value to look for");
+            if (!input.Children.Any())
+                throw new ArgumentException("No arguments provided to [strings.split]");
         }
 
         #endregion

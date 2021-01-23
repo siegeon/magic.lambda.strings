@@ -3,19 +3,17 @@
  * See the enclosed LICENSE file for details.
  */
 
-using System;
-using System.Linq;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.misc
 {
     /// <summary>
-    /// [strings.capitalize] slot that returns the Capitalized value of its specified argument.
+    /// [strings.length] slot that returns the length of its specified string argument.
     /// </summary>
-    [Slot(Name = "strings.capitalize")]
-    public class Capitalize : ISlot
+    [Slot(Name = "strings.length")]
+    public class Length : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -24,10 +22,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            var str = input.GetEx<string>();
-            input.Value = 
-                char.ToUpperInvariant(str.First()).ToString() +
-                str.Substring(1);
+            input.Value = input.GetEx<string>().Length;
         }
     }
 }

@@ -10,14 +10,14 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.misc
 {
     /// <summary>
-    /// [strings.starts-with] slot that returns true if the specified string starts with its value
+    /// [strings.ends-with] slot that returns true if the specified string ends with its value
     /// from its first argument.
     /// </summary>
-    [Slot(Name = "strings.starts-with")]
-    public class StartsWith : ISlot, ISlotAsync
+    [Slot(Name = "strings.ends-with")]
+    public class EndsWith : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -29,7 +29,7 @@ namespace magic.lambda.strings
             SanityCheck(input);
             signaler.Signal("eval", input);
             input.Value = input.GetEx<string>()
-                .StartsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+                .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace magic.lambda.strings
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
             input.Value = input.GetEx<string>()
-                .StartsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+                .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
         }
 
         #region [ -- Private helper methods -- ]
@@ -51,7 +51,7 @@ namespace magic.lambda.strings
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.starts-with] must be given exactly one argument that contains value to look for");
+                throw new ArgumentException("[strings.ends-with] must be given exactly one argument that contains value to look for");
         }
 
         #endregion

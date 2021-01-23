@@ -5,20 +5,21 @@
 
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
-    /// [strings.replace-not-of] slot for replacing occurrencies of any single character not matching
-    /// the specified character with some substitute character.
+    /// [strings.regex-replace] slot that will perform a substitution of the regular expression
+    /// matches from [what] with [with] found in your source string. [what] is expected
+    /// to be a valid regular expression.
     /// </summary>
-    [Slot(Name = "strings.replace-not-of")]
-    public class ReplaceNotOf : ISlot, ISlotAsync
+    [Slot(Name = "strings.regex-replace")]
+    public class RegexReplace : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -29,7 +30,14 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-            ReplaceImplementation(input);
+
+            var original = input.GetEx<string>();
+            var what = input.Children.First().GetEx<string>();
+            var with = input.Children.Skip(1).First().GetEx<string>();
+
+            // Substituting.
+            var ex = new Regex(what);
+            input.Value = ex.Replace(original, with);
         }
 
         /// <summary>
@@ -42,7 +50,14 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
-            ReplaceImplementation(input);
+
+            var original = input.GetEx<string>();
+            var what = input.Children.First().GetEx<string>();
+            var with = input.Children.Skip(1).First().GetEx<string>();
+
+            // Substituting.
+            var ex = new Regex(what);
+            input.Value = ex.Replace(original, with);
         }
 
         #region [ -- Private helper methods -- ]
@@ -50,25 +65,7 @@ namespace magic.lambda.strings
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
-        }
-
-        static void ReplaceImplementation(Node input)
-        {
-            var original = input.GetEx<string>();
-            var what = input.Children.First().GetEx<string>();
-            var with = input.Children.Skip(1).First().GetEx<string>();
-
-            // Substituting.
-            var result = new StringBuilder();
-            foreach (var idx in original)
-            {
-                if (what.IndexOf(idx) != -1)
-                    result.Append(idx);
-                else
-                    result.Append(with);
-            }
-            input.Value = result.ToString();
+                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
         }
 
         #endregion

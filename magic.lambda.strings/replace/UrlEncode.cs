@@ -3,17 +3,18 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Net;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
-    /// [strings.length] slot that returns the length of its specified string argument.
+    /// [strings.url-encode] slot that URL encodes the specified string.
     /// </summary>
-    [Slot(Name = "strings.length")]
-    public class Length : ISlot
+    [Slot(Name = "strings.url-encode")]
+    public class UrlEncode : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -22,7 +23,7 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            input.Value = input.GetEx<string>().Length;
+            input.Value = WebUtility.UrlEncode(input.GetEx<string>());
         }
     }
 }

@@ -10,7 +10,7 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
     /// [strings.trim]/[strings.trim-start]/[strings.trim-end] slot for trimming a specified string,

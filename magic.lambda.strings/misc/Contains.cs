@@ -10,13 +10,14 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.misc
 {
     /// <summary>
-    /// [strings.split] slot for splitting one string into multiple according to some string.
+    /// [strings.contains] slot that will return true if your specified string contains the value
+    /// found from its first argument.
     /// </summary>
-    [Slot(Name = "strings.split")]
-    public class Split : ISlot, ISlotAsync
+    [Slot(Name = "strings.contains")]
+    public class Contains : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -27,16 +28,7 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-
-            // Figuring out which string to split, and upon what to split.
-            var split = input.GetEx<string>();
-            var splitOn = input.Children.First().GetEx<string>();
-
-            // Returning the substituted strings to caller as nodes.
-            input.Clear();
-            input.AddRange(split
-                .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new Node("", x)));
+            input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
         }
 
         /// <summary>
@@ -49,24 +41,15 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
-
-            // Figuring out which string to split, and upon what to split.
-            var split = input.GetEx<string>();
-            var splitOn = input.Children.First().GetEx<string>();
-
-            // Returning the substituted strings to caller as nodes.
-            input.Clear();
-            input.AddRange(split
-                .Split(new string[] { splitOn }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new Node("", x)));
+            input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
         }
 
         #region [ -- Private helper methods -- ]
 
         static void SanityCheck(Node input)
         {
-            if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.split]");
+            if (input.Children.Count() != 1)
+                throw new ArgumentException("[strings.contains] must be given exactly one argument that contains value to look for");
         }
 
         #endregion

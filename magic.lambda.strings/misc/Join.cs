@@ -10,10 +10,11 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.misc
 {
     /// <summary>
-    /// [strings.concat] slot for concatenating two or more strings together to become one.
+    /// [strings.join] slot for joining two or more strings with
+    /// a separator character in between each string joined.
     /// </summary>
     [Slot(Name = "strings.join")]
     public class Join : ISlot, ISlotAsync
@@ -30,6 +31,9 @@ namespace magic.lambda.strings
             input.Value = string.Join(
                 input.Children.First(x => x.Name != "").GetEx<string>(),
                 input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
+
+            // House cleaning.
+            input.Clear();
         }
 
         /// <summary>

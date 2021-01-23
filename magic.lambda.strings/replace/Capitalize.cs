@@ -3,17 +3,18 @@
  * See the enclosed LICENSE file for details.
  */
 
+using System.Linq;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
-    /// [strings.to-upper] slot that returns the uppercase value of its specified argument.
+    /// [strings.capitalize] slot that returns the Capitalized value of its specified argument.
     /// </summary>
-    [Slot(Name = "strings.to-upper")]
-    public class ToUpper : ISlot
+    [Slot(Name = "strings.capitalize")]
+    public class Capitalize : ISlot
     {
         /// <summary>
         /// Implementation of slot.
@@ -22,7 +23,10 @@ namespace magic.lambda.strings
         /// <param name="input">Arguments to your slot.</param>
         public void Signal(ISignaler signaler, Node input)
         {
-            input.Value = input.GetEx<string>().ToUpperInvariant();
+            var str = input.GetEx<string>();
+            input.Value = 
+                char.ToUpperInvariant(str.First()).ToString() +
+                str.Substring(1);
         }
     }
 }

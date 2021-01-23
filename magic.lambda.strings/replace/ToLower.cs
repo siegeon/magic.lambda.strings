@@ -7,7 +7,7 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
     /// [strings.to-lower] slot that returns the lowercase value of its specified argument.

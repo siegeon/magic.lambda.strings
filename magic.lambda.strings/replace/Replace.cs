@@ -6,20 +6,18 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
-    /// [strings.regex-replace] slot that will perform a substitution of the regular expression
-    /// matches from [what] with [with] found in your source string. [what] is expected
-    /// to be a valid regular expression.
+    /// [strings.replace] slot for replacing occurrencies of one string with another string. Pass in [what]
+    /// being what to replace and [with] being its new value.
     /// </summary>
-    [Slot(Name = "strings.regex-replace")]
-    public class RegexReplace : ISlot, ISlotAsync
+    [Slot(Name = "strings.replace")]
+    public class Replace : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -36,8 +34,7 @@ namespace magic.lambda.strings
             var with = input.Children.Skip(1).First().GetEx<string>();
 
             // Substituting.
-            var ex = new Regex(what);
-            input.Value = ex.Replace(original, with);
+            input.Value = original.Replace(what, with);
         }
 
         /// <summary>
@@ -56,8 +53,7 @@ namespace magic.lambda.strings
             var with = input.Children.Skip(1).First().GetEx<string>();
 
             // Substituting.
-            var ex = new Regex(what);
-            input.Value = ex.Replace(original, with);
+            input.Value = original.Replace(what, with);
         }
 
         #region [ -- Private helper methods -- ]
@@ -65,7 +61,7 @@ namespace magic.lambda.strings
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.regex-replace] requires exactly two arguments, the first being a regular expression of what to look for, the other beings its substitute");
+                throw new ArgumentException("[strings.replace] requires exactly two arguments, the first being what to replace, the other beings its replacement");
         }
 
         #endregion

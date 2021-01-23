@@ -10,14 +10,13 @@ using magic.node;
 using magic.node.extensions;
 using magic.signals.contracts;
 
-namespace magic.lambda.strings
+namespace magic.lambda.strings.replace
 {
     /// <summary>
-    /// [strings.replace] slot for replacing occurrencies of one string with another string. Pass in [what]
-    /// being what to replace and [with] being its new value.
+    /// [strings.concat] slot for concatenating two or more strings together to become one.
     /// </summary>
-    [Slot(Name = "strings.replace")]
-    public class Replace : ISlot, ISlotAsync
+    [Slot(Name = "strings.concat")]
+    public class Concat : ISlot, ISlotAsync
     {
         /// <summary>
         /// Implementation of slot.
@@ -28,13 +27,8 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             signaler.Signal("eval", input);
-
-            var original = input.GetEx<string>();
-            var what = input.Children.First().GetEx<string>();
-            var with = input.Children.Skip(1).First().GetEx<string>();
-
-            // Substituting.
-            input.Value = original.Replace(what, with);
+            input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            input.Clear();
         }
 
         /// <summary>
@@ -47,21 +41,16 @@ namespace magic.lambda.strings
         {
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
-
-            var original = input.GetEx<string>();
-            var what = input.Children.First().GetEx<string>();
-            var with = input.Children.Skip(1).First().GetEx<string>();
-
-            // Substituting.
-            input.Value = original.Replace(what, with);
+            input.Value = string.Join("", input.Children.Select(x => x.GetEx<string>()));
+            input.Clear();
         }
 
         #region [ -- Private helper methods -- ]
 
         static void SanityCheck(Node input)
         {
-            if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace] requires exactly two arguments, the first being what to replace, the other beings its replacement");
+            if (!input.Children.Any())
+                throw new ArgumentException("No arguments provided to [strings.concat]");
         }
 
         #endregion
