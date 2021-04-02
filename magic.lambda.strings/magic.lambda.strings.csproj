@@ -6,7 +6,7 @@
     <PackageId>magic.lambda.strings</PackageId>
     <Authors>Thomas Hansen</Authors>
     <Company>Thomas Hansen</Company>
-    <Copyright>Thomas Hansen, thomas@gaiasoul.com</Copyright>
+    <Copyright>Thomas Hansen, thomas@servergardens.com</Copyright>
     <Description>String helper slots for Magic to allow you to easily modify strings from your own Hyperlambda. To use package go to https://polterguy.github.io</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.strings</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
@@ -39,7 +39,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="magic.node.extensions" Version="8.9.*" />
-    <PackageReference Include="magic.signals.contracts" Version="8.9.*" />
+    <PackageReference Include="magic.node.extensions" Version="8.9.9" />
+    <PackageReference Include="magic.signals.contracts" Version="8.9.9" />
   </ItemGroup>
 </Project>
