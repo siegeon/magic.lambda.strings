@@ -5,8 +5,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>magic.lambda.strings</PackageId>
     <Authors>Thomas Hansen</Authors>
-    <Company>Thomas Hansen</Company>
-    <Copyright>Thomas Hansen, thomas@servergardens.com</Copyright>
+    <Company>Aista, Ltd</Company>
+    <Copyright>Aista, Ltd, thomas@servergardens.com</Copyright>
     <Description>String helper slots for Magic to allow you to easily modify strings from your own Hyperlambda. To use package go to https://polterguy.github.io</Description>
     <PackageProjectUrl>https://github.com/polterguy/magic.lambda.strings</PackageProjectUrl>
     <PackOnBuild>true</PackOnBuild>
@@ -14,7 +14,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/polterguy/magic.lambda.strings.git</RepositoryUrl>
-    <PackageTags>string manipulation</PackageTags>
+    <PackageTags>string, strings, manipulation, hyperlambda</PackageTags>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
