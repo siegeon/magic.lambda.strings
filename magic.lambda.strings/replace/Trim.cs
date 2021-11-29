@@ -50,7 +50,7 @@ namespace magic.lambda.strings.replace
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() > 1)
-                throw new ArgumentException("[strings.trim] can handle at most one argument");
+                throw new HyperlambdaException("[strings.trim] can handle at most one argument");
         }
 
         static void TrimImplementation(Node input)

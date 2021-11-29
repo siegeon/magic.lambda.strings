@@ -2,10 +2,10 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using magic.node.extensions;
 
 namespace magic.lambda.strings.tests
 {
@@ -44,7 +44,7 @@ strings.contains:x:-
         [Fact]
         public void ContainsThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo1:howdy world
 strings.contains:x:-
 "));

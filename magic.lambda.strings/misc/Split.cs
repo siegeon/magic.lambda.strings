@@ -66,7 +66,7 @@ namespace magic.lambda.strings.misc
         static void SanityCheck(Node input)
         {
             if (!input.Children.Any())
-                throw new ArgumentException("No arguments provided to [strings.split]");
+                throw new HyperlambdaException("No arguments provided to [strings.split]");
         }
 
         #endregion

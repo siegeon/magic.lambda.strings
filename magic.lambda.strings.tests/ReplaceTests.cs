@@ -39,7 +39,7 @@ strings.replace:x:-
         [Fact]
         public void ReplaceTooFewArgumentsThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo1:howdy world
 strings.replace:x:-
    .:world
@@ -49,7 +49,7 @@ strings.replace:x:-
         [Fact]
         public void ReplaceTooManyArgumentsThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo1:howdy world
 strings.replace:x:-
    .:world
@@ -85,7 +85,7 @@ strings.replace-not-of:x:-
         [Fact]
         public void ReplaceNotOfThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo1:abcd123efg
 strings.replace-not-of:x:-
    .:abcdefg
@@ -117,7 +117,7 @@ strings.regex-replace:x:-
         [Fact]
         public void ReplaceRegExThrows_01()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo:thomas han0123sen
 strings.regex-replace:x:-
    .:han[0-9]*sen"));
@@ -126,7 +126,7 @@ strings.regex-replace:x:-
         [Fact]
         public void ReplaceRegExThrows_02()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo:thomas han0123sen
 strings.regex-replace:x:-
    .:han[0-9]*sen

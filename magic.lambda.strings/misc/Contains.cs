@@ -2,7 +2,6 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using magic.node;
@@ -48,7 +47,7 @@ namespace magic.lambda.strings.misc
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.contains] must be given exactly one argument that contains value to look for");
+                throw new HyperlambdaException("[strings.contains] must be given exactly one argument that contains value to look for");
         }
 
         #endregion

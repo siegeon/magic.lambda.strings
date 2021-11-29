@@ -2,10 +2,10 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using magic.node.extensions;
 
 namespace magic.lambda.strings.tests
 {
@@ -107,7 +107,7 @@ strings.trim-end:x:-
         [Fact]
         public void TrimThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo1:@""  howdy world    ""
 strings.trim-end:x:-
    .:foo
@@ -118,7 +118,7 @@ strings.trim-end:x:-
         [Fact]
         public async Task TrimThrowsAsyn()
         {
-            await Assert.ThrowsAsync<ArgumentException>(async () => await Common.EvaluateAsync(@"
+            await Assert.ThrowsAsync<HyperlambdaException>(async () => await Common.EvaluateAsync(@"
 .foo1:@""  howdy world    ""
 strings.trim-end:x:-
    .:foo

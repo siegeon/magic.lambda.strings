@@ -41,7 +41,7 @@ strings.ends-with:x:-/-
         [Fact]
         public void EndsWithThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo:foo-xxx
 strings.ends-with:x:-
 "));

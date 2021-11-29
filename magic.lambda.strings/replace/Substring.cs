@@ -2,7 +2,6 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using magic.node;
@@ -59,7 +58,7 @@ namespace magic.lambda.strings.replace
         static void SanityCheck(Node input)
         {
             if (!input.Children.Any())
-                throw new ArgumentException("[strings.substring] requires one or two arguments");
+                throw new HyperlambdaException("[strings.substring] requires one or two arguments");
         }
 
         #endregion

@@ -49,7 +49,7 @@ namespace magic.lambda.strings.replace
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 2)
-                throw new ArgumentException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
+                throw new HyperlambdaException("[strings.replace-not-of] requires exactly two arguments, the first being a list of characters to not replace, the other beings its replacement character(s)");
         }
 
         static void ReplaceImplementation(Node input)

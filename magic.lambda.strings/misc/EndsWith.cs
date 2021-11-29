@@ -50,7 +50,7 @@ namespace magic.lambda.strings.misc
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.ends-with] must be given exactly one argument that contains value to look for");
+                throw new HyperlambdaException("[strings.ends-with] must be given exactly one argument that contains value to look for");
         }
 
         #endregion

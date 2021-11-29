@@ -41,7 +41,7 @@ strings.starts-with:x:-/-
         [Fact]
         public void StartsWithThrows()
         {
-            Assert.Throws<ArgumentException>(() => Common.Evaluate(@"
+            Assert.Throws<HyperlambdaException>(() => Common.Evaluate(@"
 .foo:foo-xxx
 strings.starts-with:x:-
 "));

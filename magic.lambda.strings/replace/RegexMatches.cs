@@ -2,7 +2,6 @@
  * Magic Cloud, copyright Aista, Ltd. See the attached LICENSE file for details.
  */
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -79,7 +78,7 @@ namespace magic.lambda.strings.replace
         static void SanityCheck(Node input)
         {
             if (input.Children.Count() != 1)
-                throw new ArgumentException("[strings.matches] requires exactly one argument being the regular expression to match towards specified source value");
+                throw new HyperlambdaException("[strings.matches] requires exactly one argument being the regular expression to match towards specified source value");
         }
 
         #endregion
