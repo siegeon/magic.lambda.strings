@@ -6,9 +6,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using magic.node;
+using magic.node.contracts;
 using magic.signals.services;
 using magic.signals.contracts;
 using magic.node.extensions.hyperlambda;
@@ -39,9 +40,9 @@ namespace magic.lambda.strings.tests
 
         static IServiceProvider Initialize()
         {
-            var configuration = new ConfigurationBuilder().Build();
             var services = new ServiceCollection();
-            services.AddTransient<IConfiguration>((svc) => configuration);
+            var mockConfiguration = new Mock<IMagicConfiguration>();
+            services.AddTransient((svc) => mockConfiguration.Object);
             services.AddTransient<ISignaler, Signaler>();
             var types = new SignalsProvider(InstantiateAllTypes<ISlot>(services));
             services.AddTransient<ISignalsProvider>((svc) => types);
