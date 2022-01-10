@@ -27,6 +27,7 @@ namespace magic.lambda.strings.misc
             SanityCheck(input);
             signaler.Signal("eval", input);
             input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
+            input.Clear(); // House cleaning.
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace magic.lambda.strings.misc
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
             input.Value = input.GetEx<string>().Contains(input.Children.First().GetEx<string>());
+            input.Clear(); // House cleaning.
         }
 
         #region [ -- Private helper methods -- ]

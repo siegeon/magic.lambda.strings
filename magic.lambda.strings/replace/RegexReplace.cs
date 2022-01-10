@@ -36,6 +36,9 @@ namespace magic.lambda.strings.replace
             // Substituting.
             var ex = new Regex(what);
             input.Value = ex.Replace(original, with);
+
+            // House cleaning.
+            input.Clear();
         }
 
         /// <summary>
@@ -56,6 +59,9 @@ namespace magic.lambda.strings.replace
             // Substituting.
             var ex = new Regex(what);
             input.Value = ex.Replace(original, with);
+
+            // House cleaning.
+            input.Clear();
         }
 
         #region [ -- Private helper methods -- ]

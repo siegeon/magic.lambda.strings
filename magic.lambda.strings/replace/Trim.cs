@@ -29,6 +29,7 @@ namespace magic.lambda.strings.replace
             SanityCheck(input);
             signaler.Signal("eval", input);
             TrimImplementation(input);
+            input.Clear(); // House cleaning.
         }
 
         /// <summary>
@@ -42,6 +43,7 @@ namespace magic.lambda.strings.replace
             SanityCheck(input);
             await signaler.SignalAsync("eval", input);
             TrimImplementation(input);
+            input.Clear(); // House cleaning.
         }
 
         #region [ -- Private helper methods -- ]

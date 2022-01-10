@@ -47,6 +47,9 @@ namespace magic.lambda.strings.misc
             input.Value = string.Join(
                 input.Children.First(x => x.Name != "").GetEx<string>(),
                 input.Evaluate().Select(x => x.GetEx<string>()).ToArray());
+
+            // House cleaning.
+            input.Clear();
         }
 
         #region [ -- Private helper methods -- ]

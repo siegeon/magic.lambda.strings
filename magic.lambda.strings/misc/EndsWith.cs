@@ -29,6 +29,7 @@ namespace magic.lambda.strings.misc
             signaler.Signal("eval", input);
             input.Value = input.GetEx<string>()
                 .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+            input.Clear(); // House cleaning.
         }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace magic.lambda.strings.misc
             await signaler.SignalAsync("eval", input);
             input.Value = input.GetEx<string>()
                 .EndsWith(input.Children.First().GetEx<string>(), StringComparison.InvariantCulture);
+            input.Clear(); // House cleaning.
         }
 
         #region [ -- Private helper methods -- ]
